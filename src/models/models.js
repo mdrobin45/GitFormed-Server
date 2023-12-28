@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 const repoSchema = require("../schemas/repoSchema");
+const pullReqSchema = require("../schemas/pullReqSchema");
 
 // Create models
-const repoModel = mongoose.model("Repository", repoSchema);
+const RepoModel = mongoose.model("Repository", repoSchema);
+const PullReqModel = mongoose.model("PullRequest", pullReqSchema);
 
 // Export models
-module.exports = { repoModel };
+module.exports = { RepoModel, PullReqModel };
