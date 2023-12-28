@@ -3,6 +3,7 @@ const cors = require("cors");
 const database = require("./src/database");
 const repoRouter = require("./src/routes/repositories");
 const pullReqRouter = require("./src/routes/pullrequest");
+const userRouter = require("./src/routes/user");
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 });
 app.use("/repositories", repoRouter);
 app.use("/pull-request", pullReqRouter);
+app.use("/user", userRouter);
 
 // Listen server
 app.listen(port, () => {
