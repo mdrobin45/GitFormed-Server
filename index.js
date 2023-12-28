@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const database = require("./src/database");
+const repoRouter = require("./src/routes/repositories");
 const app = express();
 require("dotenv").config();
 const port = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ database();
 app.get("/", (req, res) => {
    res.send("Server running");
 });
+app.use("/repositories", repoRouter);
 
 // Listen server
 app.listen(port, () => {
