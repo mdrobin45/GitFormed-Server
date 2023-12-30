@@ -8,8 +8,7 @@ const repoSchema = mongoose.Schema(
       repoUserEmail: { type: String, required: true },
       repoWatchers: [
          {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Users",
+            type: String,
          },
       ],
    },
