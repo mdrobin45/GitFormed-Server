@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const pullReqSchema = mongoose.Schema(
    {
       pullReqTitle: { type: String, required: true },
+      repo: { type: String, required: true },
    },
    { timestamps: true }
 );
