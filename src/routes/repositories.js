@@ -5,7 +5,11 @@ const findRepo = require("../controllers/repo/findRepo");
 const getRepoByEmail = require("../controllers/repo/getRepoByEmail");
 const updateWatcher = require("../controllers/repo/updateWatcher");
 const removeWatcher = require("../controllers/repo/removeWatcher");
+const getUserWatchingRepo = require("../controllers/repo/getUserWatchingRepo");
 const repoRouter = express.Router();
+
+// Get repo by watcher
+repoRouter.get("/user-watching", getUserWatchingRepo);
 
 // Find repo with name
 repoRouter.get("/find", findRepo);
