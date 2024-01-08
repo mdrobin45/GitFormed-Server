@@ -21,9 +21,12 @@ const sortRepo = async (req, res) => {
       } else {
          let response = await RepoModel.find(query);
 
+         // Show latest repo
+         response.sort((a, b) => b.createdAt - a.createdAt);
+
          // Sort repositories
          if (sortBy === "latest") {
-            response = response.sort((a, b) => a.createdAt - b.createdAt);
+            response = response.sort((a, b) => b.createdAt - a.createdAt);
          } else if (sortBy === "alphabetical") {
             response = response.sort((a, b) =>
                a.repoName.toLowerCase().localeCompare(b.repoName.toLowerCase())
