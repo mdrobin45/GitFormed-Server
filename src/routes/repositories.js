@@ -6,7 +6,11 @@ const getRepoByEmail = require("../controllers/repo/getRepoByEmail");
 const updateWatcher = require("../controllers/repo/updateWatcher");
 const removeWatcher = require("../controllers/repo/removeWatcher");
 const getUserWatchingRepo = require("../controllers/repo/getUserWatchingRepo");
+const sortRepo = require("../controllers/repo/sortRepo");
 const repoRouter = express.Router();
+
+// Sort repo
+repoRouter.get("/sort", sortRepo);
 
 // Get repo by watcher
 repoRouter.get("/user-watching", getUserWatchingRepo);
