@@ -2,24 +2,23 @@ const { RepoModel, UserModel } = require("../../models/models");
 
 const sortRepo = async (req, res) => {
    try {
-      let email = req.query.repo || "all";
+      const email = req.query.email;
+      let userEmail = req.query.repo || "all";
       const sortBy = req.query.sortBy || "latest";
       const myWatching = req.query.myWatching || false;
 
       // Query repositories
-      query = email === "all" ? {} : { repoUserEmail: email };
+      query = userEmail === "all" ? {} : { repoUserEmail: userEmail };
 
       // Find user id with email
       const user = await UserModel.findOne({ email });
 
       if (myWatching === "true") {
-         console.log("querying watch");
          const watchingRepo = await RepoModel.find({
             repoWatchers: { $in: [user?._id] },
          });
          return res.status(200).json(watchingRepo);
       } else {
-         console.log("querying filter");
          let response = await RepoModel.find(query);
 
          // Sort repositories
