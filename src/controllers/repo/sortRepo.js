@@ -10,7 +10,7 @@ const sortRepo = async (req, res) => {
       pageNumber = parseFloat(pageNumber);
 
       // Pagination
-      const perPage = 5;
+      const perPage = 10;
       const startIndex = (pageNumber - 1) * perPage;
       const endIndex = startIndex + perPage;
 
@@ -26,9 +26,9 @@ const sortRepo = async (req, res) => {
          });
 
          // Total repositories count
-         const countTotal = await RepoModel.find({
+         const countTotal = await RepoModel.countDocuments({
             repoWatchers: { $in: [user?._id] },
-         }).estimatedDocumentCount();
+         });
 
          // Slice repositories base on pagination
          response = response.slice(startIndex, endIndex);
