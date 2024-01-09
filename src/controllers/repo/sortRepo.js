@@ -3,11 +3,14 @@ const { RepoModel, UserModel } = require("../../models/models");
 const sortRepo = async (req, res) => {
    try {
       const email = req.query.email;
-      let userEmail = req.query.repo || "all";
-      const sortBy = req.query.sortBy || "latest";
-      const myWatching = req.query.myWatching || false;
-      let pageNumber = req.query.pageNumber || 1;
+      let { repo, sortBy, myWatching, pageNumber } = req.query;
+
+      repo = repo !== "null" ? repo : "all" || "all";
+      sortBy = sortBy !== "null" ? sortBy : "latest" || "latest";
+      myWatching = myWatching !== "null" ? myWatching : false || false;
+      pageNumber = pageNumber !== "null" ? pageNumber : 1 || 1;
       pageNumber = parseFloat(pageNumber);
+      console.log(repo, sortBy, myWatching, pageNumber);
 
       // Pagination
       const perPage = 10;
@@ -15,7 +18,7 @@ const sortRepo = async (req, res) => {
       const endIndex = startIndex + perPage;
 
       // Query repositories
-      query = userEmail === "all" ? {} : { repoUserEmail: email };
+      query = repo === "all" ? {} : { repoUserEmail: email };
 
       // Find user id with email
       const user = await UserModel.findOne({ email });
@@ -39,13 +42,10 @@ const sortRepo = async (req, res) => {
          let response = await RepoModel.find(query);
 
          // Total repositories count
-         const countTotal = await RepoModel.find(
-            query
-         ).estimatedDocumentCount();
+         const countTotal = await RepoModel.countDocuments(query);
 
          // Show latest repo
          response.sort((a, b) => b.createdAt - a.createdAt);
-         // await response.limit(perPage).skip(currentPage);
 
          // Sort repositories
          if (sortBy === "latest") {
