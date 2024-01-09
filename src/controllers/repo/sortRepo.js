@@ -6,23 +6,46 @@ const sortRepo = async (req, res) => {
       let userEmail = req.query.repo || "all";
       const sortBy = req.query.sortBy || "latest";
       const myWatching = req.query.myWatching || false;
+      let pageNumber = req.query.pageNumber || 1;
+      pageNumber = parseFloat(pageNumber);
+
+      // Pagination
+      const perPage = 5;
+      const startIndex = (pageNumber - 1) * perPage;
+      const endIndex = startIndex + perPage;
 
       // Query repositories
-      query = userEmail === "all" ? {} : { repoUserEmail: userEmail };
+      query = userEmail === "all" ? {} : { repoUserEmail: email };
 
       // Find user id with email
       const user = await UserModel.findOne({ email });
 
       if (myWatching === "true") {
-         const watchingRepo = await RepoModel.find({
+         let response = await RepoModel.find({
             repoWatchers: { $in: [user?._id] },
          });
-         return res.status(200).json(watchingRepo);
+
+         // Total repositories count
+         const countTotal = await RepoModel.find({
+            repoWatchers: { $in: [user?._id] },
+         }).estimatedDocumentCount();
+
+         // Slice repositories base on pagination
+         response = response.slice(startIndex, endIndex);
+
+         // Return results
+         return res.status(200).json({ total: countTotal, response });
       } else {
          let response = await RepoModel.find(query);
 
+         // Total repositories count
+         const countTotal = await RepoModel.find(
+            query
+         ).estimatedDocumentCount();
+
          // Show latest repo
          response.sort((a, b) => b.createdAt - a.createdAt);
+         // await response.limit(perPage).skip(currentPage);
 
          // Sort repositories
          if (sortBy === "latest") {
@@ -37,7 +60,11 @@ const sortRepo = async (req, res) => {
             );
          }
 
-         return res.status(200).json(response);
+         // Slice repositories base on pagination
+         response = response.slice(startIndex, endIndex);
+
+         // Return results
+         return res.status(200).json({ total: countTotal, response });
       }
    } catch (err) {
       console.log(err);
