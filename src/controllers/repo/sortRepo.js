@@ -10,7 +10,6 @@ const sortRepo = async (req, res) => {
       myWatching = myWatching !== "null" ? myWatching : false || false;
       pageNumber = pageNumber !== "null" ? pageNumber : 1 || 1;
       pageNumber = parseFloat(pageNumber);
-      console.log(repo, sortBy, myWatching, pageNumber);
 
       // Pagination
       const perPage = 10;
