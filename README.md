@@ -7,19 +7,19 @@ This is the backend for `GitFormed` project. You will find the frontend [here](h
 Clone the project
 
 ```bash
-  git clone https://github.com/mdrobin45/GitFormed-Server.git
+git clone https://github.com/mdrobin45/GitFormed-Server.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd GitFormed-Server
+cd GitFormed-Server
 ```
 
 Install dependencies
 
 ```bash
-  npm install
+npm install
 ```
 
 #### Environment Variables
