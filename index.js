@@ -32,5 +32,5 @@ app.use("/user", userRouter);
 
 // Listen server
 app.listen(port, () => {
-   console.log(`Server is running in ${port}`);
+   console.log(`Server is running in ${port} port`);
 });
