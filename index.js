@@ -14,7 +14,7 @@ const port = process.env.PORT || 3000;
 app.use(
    cors({
       credentials: true,
-      origin: process.env.LOCAL_SITE,
+      origin: process.env.CORS_ORIGIN,
    })
 );
 app.use(express.json());
